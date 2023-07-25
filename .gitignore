@@ -1,5 +1,7 @@
 resources/ip/data
 resources/cifar10
+*test*.ipynb
+*.log
 
 # tar archive files
 *.tgz
