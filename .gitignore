@@ -2,6 +2,7 @@ resources/ip/data
 resources/cifar10
 *test*.ipynb
 *.log
+.vscode
 
 # tar archive files
 *.tgz
