@@ -9,6 +9,9 @@ git clone https://github.com/cybershiptrooper/CV_bootcamp_SWB.git
 cd CV_bootcamp_SWB/resources 
 source get_cifar10.sh
 ```
+
+You will need pytorch, numpy and matplotlib to run the notebook.
+
 Misc: 
 
 Bonus exercises are listed under the [bonus_exercises folder](./bonus_exercises/). Solutions and other resources can be found under [resources](./resources/).
