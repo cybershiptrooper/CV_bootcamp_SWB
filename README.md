@@ -1,4 +1,4 @@
-This repository contains all resources of my talk in SWB's Deep Learning training camp for University of Lagos. 
+This repository contains all resources of my talk in SWB's Data Science Bootcamp for University of Lagos. 
 
 You will find the main presentation in [cv_bootcamp.ipynb](./cv_bootcamp.ipynb). To run this presentation on colab, please use [this link](https://colab.research.google.com/github/cybershiptrooper/CV_bootcamp_SWB/blob/main/cv_bootcamp.ipynb).
 
