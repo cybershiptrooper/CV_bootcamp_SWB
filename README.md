@@ -14,5 +14,12 @@ You will need pytorch, numpy and matplotlib to run the notebook.
 
 Misc: 
 
-Bonus exercises are listed under the [bonus_exercises folder](./bonus_exercises/). Solutions and other resources can be found under [resources](./resources/).
+Bonus exercises are listed under the [bonus_exercises folder](./bonus_exercises/). 
+It consists of two exercises:
+1. Implementing Convolutions for multiple RGB images
+2. Implementing the attention mechanism you learnt in the last session
+
+Both using numpy
+
+Solutions and other resources can be found under [resources](./resources/). Apart from the datasets used, it has all the [auxiliary notes](./resources/notes/), [solutions](./resources/solns/) to exercises in the notebook and some [useful utilities](./resources/utils/) to train on cifar 10.
 

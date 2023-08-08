@@ -3,6 +3,7 @@ import torch.nn.functional as F
 import torch.optim as optim
 import numpy as np
 import random
+from typing import Callable
 
 def seed_everything(seed=0):
     '''
@@ -17,7 +18,7 @@ def seed_everything(seed=0):
     #torch.backends.cudnn.deterministic = True # Commented as it can slow down training
     #torch.backends.cudnn.benchmark = True
 
-def evaluate(model: torch.nn.Module, test_loader: torch.utils.data.DataLoader, device: torch.device) -> float:
+def evaluate(model: torch.nn.Module, test_loader: torch.utils.data.DataLoader, device: torch.device, loss_fn: Callable) -> float:
     '''
     Evaluate the model on the test set
     :param model: the model to evaluate
@@ -26,16 +27,18 @@ def evaluate(model: torch.nn.Module, test_loader: torch.utils.data.DataLoader, d
     '''
     model.eval()
     correct = 0
+    loss_sum = 0
     with torch.no_grad():
         for data, target in test_loader:
             data, target = data.to(device), target.to(device) # move to device
             output = model(data) # forward pass
             pred = output.argmax(dim=1, keepdim=True) # get the index of the max log-probability
             correct += pred.eq(target.view_as(pred)).sum().item() # get the number of correct predictions
-    return correct / len(test_loader.dataset) # return the accuracy
+            loss_sum += loss_fn(output, target).item()
+    return correct / len(test_loader.dataset), loss_sum / len(test_loader.dataset) 
 
 
-def train(model: torch.nn.Module, train_loader: torch.utils.data.DataLoader, optimizer: torch.optim.Optimizer, loss_fn: torch.nn.Module, device: torch.device) -> float:
+def train(model: torch.nn.Module, train_loader: torch.utils.data.DataLoader, optimizer: torch.optim.Optimizer, loss_fn: Callable, device: torch.device) -> float:
     '''
     Train the model for one epoch
     :param model: the model to train
