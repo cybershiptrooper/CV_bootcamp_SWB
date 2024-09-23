@@ -3,7 +3,7 @@ resources/cifar10
 *test*.ipynb
 *.log
 .vscode
-
+*.DS_Store
 # tar archive files
 *.tgz
 *.tar.gz

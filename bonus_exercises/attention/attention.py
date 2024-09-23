@@ -1,5 +1,5 @@
 import numpy as np
-from soln.attention import multihead_attention_soln, set_params
+from soln.attention import test_multihead_attention_soln, set_params
 
 b = 32 # batch size
 wps = 64 # words per sentence
@@ -20,13 +20,31 @@ def multihead_attention(res_stream, Wq, Wv, Wk, Wo) -> np.ndarray:
         Wk: list of nh (dm, dm // nh) np.ndarray
         Wo: (dm, dm) np.ndarray
     Outputs:
+        q: (b, nh, wps, dm) np.ndarray
+        k: (b, nh, wps, dm) np.ndarray
+        v: (b, nh, wps, dm) np.ndarray
+            The q/k/v values for each head
+        qk: (b, nh, wps, wps) np.ndarray
+            qk product for each head
+        attn_scores: (b, nh, wps, wps) np.ndarray
+            Attention scores for each head
+        attn_out: (b, wps, dm) np.ndarray
+            Output of MHA
         out: (b, wps, dm) np.ndarray
+            State of res_stream after multihead attention
     '''
     # TODO: implement this function
-    return None
+    q, k, v = None, None, None
+    qk = None
+    attn_scores = None
+    attn_out = None
+    out = None
+
+    return q, k, v, qk, attn_scores, attn_out, out
 
 if __name__ == "__main__":
     np.random.seed(0)
+    np.set_printoptions(precision=2)
     set_params(b, wps, dm, nh)
     assert dm % nh == 0, "dm must be divisible by nh"
     # list of parameters for each head d_model x d_head
@@ -35,10 +53,19 @@ if __name__ == "__main__":
     Wk = [np.random.uniform(0.0, 0.02, (dm, dm // nh)) for _ in range(nh)]
     Wo = np.random.uniform(0.0, 0.02, (dm, dm))
     res_stream = np.random.uniform(0.0, 1.0, (b, wps, dm))
-    res = multihead_attention(res_stream, Wq, Wv, Wk, Wo)
-    res_soln = multihead_attention_soln(res_stream, Wq, Wv, Wk, Wo)
+    q, k, v, qk, attn_scores, attn_out, res = multihead_attention(res_stream, Wq, Wv, Wk, Wo)
+    output = {
+        "q": q,
+        "k": k,
+        "v": v,
+        "qk": qk,
+        "attn_scores": attn_scores,
+        "attn_out": attn_out,
+        "res": res
+    }
+
     try:
-        assert np.allclose(res, res_soln)
+        assert test_multihead_attention_soln(res_stream, Wq, Wv, Wk, Wo, output)
         print("Passed")
-    except:
-        print("Failed")
+    except AssertionError as e:
+        print("Failed, ", e)
